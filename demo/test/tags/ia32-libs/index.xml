@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Ia32-Libs on Curiosity &amp; the Geek Blog </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>/tags/ia32-libs/index.xml/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Sun, 14 Sep 2014 06:10:34 IST</updated>
+    
+    <item>
+      <title>Making Android Studio (or Eclipse ADT) work on 64-bit Ubuntu Saucy 13.10 or Trusty 14.04</title>
+      <link>/blog/android-studio-on-trusty/</link>
+      <pubDate>Sun, 14 Sep 2014 06:10:34 IST</pubDate>
+      
+      <guid>/blog/android-studio-on-trusty/</guid>
+      <description>
+
+&lt;h2 id=&#34;toc_0&#34;&gt;The Issue&lt;/h2&gt;
+
+&lt;p&gt;Getting Android Studio (or Eclipse Android Development Tools) to run successfully on 64-bit (ie. amd64)
+installations of the newer Ubuntu (or underlying Debian) distributions like Trusty Thar (14.04)
+is not a very straightforward process. While the IDE you download itself will work assuming you have JDK
+installed, it will throw a bunch of build errors when you try to build any app.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Why does this happen&lt;/h2&gt;
+
+&lt;p&gt;The build errors happen because the Android &lt;code&gt;build-tools&lt;/code&gt; are actually 32-bit (ie. i386) binaries dynamically linked
+to several 32-bit libraries. For instance, this is what the the &lt;code&gt;file&lt;/code&gt; outputs on my installation
+of the &lt;code&gt;aapt&lt;/code&gt; tool in the &lt;code&gt;build-tools&lt;/code&gt; folder within the sdk
+    file aapt
+    aapt: ELF 32-bit LSB  shared object, Intel 80386, version 1 (SYSV), dynamically linked
+    (uses shared libs), for GNU/Linux 2.6.8, not stripped&lt;/p&gt;
+
+&lt;p&gt;While the 64-bit installations of Linux can run 32-bit binaries, they do not come pre-installed with
+the necessary 32-bit libraries pre-installed. Googling throws up dozens of posts advising installation
+of the &lt;code&gt;ia32-libs&lt;/code&gt; but this advise is unfortunately outdated. Newer versions of Ubuntu from 13.10 Saucy
+onwards have &lt;a href=&#34;http://askubuntu.com/questions/359156/how-do-you-run-a-32-bit-program-on-a-64-bit-version-of-ubuntu/359184#359184&#34;&gt;removed&lt;/a&gt;
+the &lt;code&gt;ia32-libs&lt;/code&gt; package and rely fully on &lt;a href=&#34;https://wiki.debian.org/Multiarch&#34;&gt;Multiarch&lt;/a&gt; which is a
+much more comprehensive solution.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;The Solution&lt;/h2&gt;
+
+&lt;p&gt;To get Android Studio (or Eclipse ADT) build properly on the newer 64 bit Ubuntu releases like 13.10
+Saucy or 14.04 Trusty you need to add the 32-bit i386 library dependencies as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo dpkg --add-architecture i386
+sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s it! You shouldn&amp;rsquo;t get the build errors any more! Happy app development!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

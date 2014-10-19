@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2014-10-05T13:27:02+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/nile-color-theme/</loc>
+    <lastmod>2014-10-05T13:27:02+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/android-studio-on-trusty/</loc>
+    <lastmod>2014-09-14T06:10:34+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>/opensource/goanigiffy/</loc>
+    <lastmod>2014-08-31T05:31:44+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/fusecompress-on-ubuntu/</loc>
+    <lastmod>2014-08-30T09:06:32+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/opensource/ardgrafix6100/</loc>
+    <lastmod>2014-08-25T04:23:21+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/opensource/fullscreenwrapper/</loc>
+    <lastmod>2014-08-24T04:24:12+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/simplehttpservers/</loc>
+    <lastmod>2014-08-23T05:59:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/about/</loc>
+    <lastmod>2014-08-01T02:50:25+00:00</lastmod>
+  </url>
+  
+</urlset>

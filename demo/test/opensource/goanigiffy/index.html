@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Living at the intersection of Technology, Research, Economics & Art">
+    <link rel="stylesheet" href="/css/pure-min.css">
+    <link rel="stylesheet" href="/css/grids-responsive-min.css">
+    <link rel="stylesheet" href="/css/blog.css">
+    <link rel="stylesheet" href="/css/solarized_light.css">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54341244-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <title>GoAniGiffy: A versatile animated GIF creator</title>
+</head>
+<body>
+
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+    <div class="header">
+        <a href="/"><h1 class="brand-title">Curiosity &amp; the Geek</h1></a>
+        <h2 class="brand-tagline">Life at the intersection of Technology, Insights & Art</h2>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a class="pure-button" href="/">All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="pure-button" href="/blog">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="pure-button" href="/opensource">Opensource</a>
+                </li>
+                <li class="nav-item">
+                    <a class="pure-button" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                <a class="pure-button" href="/index.xml"><img width="11" height="11" src="/img/common/rss.svg" />&nbsp;Subscribe</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+    
+    <div class="content pure-u-1 pure-u-md-3-4">
+            
+            <div class="posts">
+                
+                <section class="post">
+                    <header class="post-header">
+    <img class="post-avatar" alt="Hariharan Srinath" height="48" width="48" src="/img/profilepics/srinath.jpg">
+    <a href="/opensource/goanigiffy/"><h2 class="post-title">GoAniGiffy: A versatile animated GIF creator</h2></a>
+
+    <p class="post-meta">
+        By Hariharan Srinath 
+        
+            <a class="post-category" href="/tags/golang">golang</a>
+        
+            <a class="post-category" href="/tags/gif">gif</a>
+        
+            <a class="post-category" href="/tags/graphics">graphics</a>
+        
+            <a class="post-category" href="/tags/opensource">opensource</a>
+        
+    </p>
+</header>
+
+                     <div class="socialbuttons" style="float:right">
+    <a href="/index.xml"><img width="20" height="20" src="/img/common/rss.svg" /></a>
+    <div class="g-plus" data-action="share" data-annotation="none"></div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="srinathh" data-count="none" data-dnt="true">Tweet</a>
+</div>
+
+
+
+                    <div class="post-description">
+                        
+
+<p>Animated GIFs have made a comeback as very convenient ways to post short video clips or slideshows on the web
+without needing Flash, YouTube or Flickr embedding. Their convenience often outweights image quality limitations
+(only 256 colors palette) and poor compression for basic uses.</p>
+
+<p>While a number of free web services have sprung up to convert videos to animated GIFs, they do not typically
+allow editing beyond basic trimming. You <em>could</em> use a traditional video editor of course but the free ones
+are not exactly intuitive and have limited utility in creating slideshows.</p>
+
+<h2 id="toc_0">GoAniGiffy</h2>
+
+<p>GoAniGiffy is a small utility written in <a href="http://www.golang.org">Go Programming language</a> that was born out
+of the need to convert my <a href="https://www.youtube.com/watch?v=esBDMSmbg3E">demo video</a> of
+<a href="/opensource/ardgrafix6100/">ArdGrafix6100</a> into an <a href="/img/ardgrafix6100demo.gif">animated GIF</a> for
+hosting on GitHub Pages. This video was originally shot on a phone camera and I wanted to crop it
+to show only the LCD Display with some scaling and rotation. I tried MPlayer first but found it does
+not use good dithering in downsampling the video to 256 colors for GIFs resulting in poor splotchy images.</p>
+
+<p>GoAniGiffy converts a set of alphabetically sorted image files (eg. video frames extracted as JPEGs)
+into an animated GIF with the options to crop, scale, rotate &amp; flip source images. Downsampling
+and Scaling are done with high quality algorithms from the <code>github.com/disintegration/imaging</code> library by
+<a href="https://www.github.com/disintegration/imaging">Grigory Dryapak</a> and the <a href="http://golang.org/pkg/image/draw/#Drawer">Go Standard Library</a></p>
+
+<h2 id="toc_1">Download</h2>
+
+<p><a href="https://github.com/srinathh/goanigiffy/tree/master/binaries">Zipped executable binaries</a> are available for Linux
+&amp; Windows in both 32 bit &amp; 64 bit flavors. Download the zip appropriate to your OS and extract somewhere in your
+system PATH.  If you want to <a href="https://github.com/srinathh/goanigiffy">build from source</a> <code>go get</code> should fetch the imported libraries &amp; build the utility
+in your $GOPATH/bin.</p>
+
+<pre><code>go get github.com/srinathh/goanigiffy
+</code></pre>
+
+<h2 id="toc_2">Usage</h2>
+
+<p>GoAniGiffy is a command line utility to be used from the terminal - no GUIs for the present. Use GoAniGiffy with
+a command line of the form below. All parameters are optional and have sane default values.</p>
+
+<pre><code>goanigiffy -src=&quot;&lt;file name pattern&gt;&quot; -&lt;option&gt;=&lt;value&gt; -&lt;option&gt;=&lt;value&gt;... -dest=&quot;&lt;gif file name&gt;&quot;
+</code></pre>
+
+<h3 id="toc_3">Image Options</h3>
+
+<ul>
+<li><p><code>-src = &quot;&lt;file name pattern&gt;&quot;</code><br />
+This specifies the input images using a file name pattern. You can use
+standard wildcards or a <a href="http://golang.org/pkg/path/filepath/#Match">more complex pattern</a> supported by
+the <code>path/filepath</code> package in Go Language. GoAniGiffy will find matching files and sort them
+alphabetically before processing which makes it easy to use GoAniGiffy with numbered image frames extracted
+from videos.  If you do not specfiy <code>-src</code>, GoAniGiffy will use <code>&quot;*.jpg&quot;</code> as the file pattern.</p></li>
+
+<li><p><code>-dest=&quot;&lt;gif file name&gt;&quot;</code><br />
+This specifies the file name and path for the output gif file. If you do not specifiy an
+output file, GoAniGiffy will by default create &ldquo;movie.gif&rdquo; in the current folder.</p></li>
+
+<li><p><code>-delay=&lt;integer value&gt;</code><br />
+This specifies the delay between frames of the image in multiples of hundredths of a second.
+A value of 3 which is the default should theoritically give you 33 frames per second close to the default video speed.</p></li>
+</ul>
+
+<h3 id="toc_4">Cropping Options</h3>
+
+<ul>
+<li><p><code>-cropleft=&lt;integer value&gt;</code><br />
+If you want to crop the images, specify the left co-ordinate of the top-left corner of the
+rectangle you would like to crop here. The default value is 0</p></li>
+
+<li><p><code>-croptop=&lt;integer value&gt;</code><br />
+If you want to crop the images, specify the top co-ordinate of the top-left corner of the
+rectangle you would like to crop here. The default value is 0</p></li>
+
+<li><p><code>-cropwidth=&lt;integer value&gt;</code><br />
+If you want to crop the images, specify the width of the rectangle you would like to crop
+here. The default value is -1 which specifies the full image width.</p></li>
+
+<li><p><code>-cropheigh=&lt;integer value&gt;</code><br />
+If you want to crop the images, specify the height of the rectangle you would like to crop
+here. The default value is -1 which specifies the full image height.</p></li>
+</ul>
+
+<h3 id="toc_5">Other Image Editing Options</h3>
+
+<ul>
+<li><p><code>-scale=&lt;decimal value&gt;</code><br />
+If you want to scale the images, specify a scaling factor here in terms of decimals. For instance
+to make the animated GIF half the size as source images use -scale=0.5. The default value is 1.0
+which specifies no scaling</p></li>
+
+<li><p><code>-rotate=&lt;0 or 90 or 180 or 270&gt;</code><br />
+If you want the images to be rotated, specify the rotation angle in degrees here. Arbitrary
+rotations are not supported and you can only use 90, 180 or 270. The default value is 0 which specifies no rotation</p></li>
+
+<li><p><code>-flip=&lt;&quot;none&quot; or &quot;horizontal&quot; or &quot;vertical&quot;&gt;</code><br />
+If you want the images to be flipped, specify &ldquo;horizontal&rdquo; or
+&ldquo;vertical&rdquo; here. The default value is &ldquo;none&rdquo; which specifies no flipping</p></li>
+</ul>
+
+<h3 id="toc_6">Other Options</h3>
+
+<ul>
+<li><code>-verbose</code><br />
+By default GoAniGiffy will process the files and exit without any messages unless there is an error.
+Specifying -verbose will show in-process messages as the individual frames get processed</li>
+</ul>
+
+<h2 id="toc_7">Extracting Frames from Video</h2>
+
+<p>If you want to convert a video to an animated GIF, you first need to extract frames. I use <a href="http://www.mplayerhq.hu/">MPlayer</a>
+with a command line like below to extract JPEG frames. The <code>-ss 6 -endpos 8</code> options specify extraction between the 6th and 8th seconds</p>
+
+<pre><code>mplayer -vo jpeg:quality=80 -nosound -ss 6 -endpos 8 vid.mp4
+</code></pre>
+
+<h2 id="toc_8">Example</h2>
+
+<p>This command line creates a movie.gif from the images in the <a href="https://github.com/srinathh/goanigiffy/tree/master/sample">sample folder</a>
+of the source repository.</p>
+
+<pre><code>goanigiffy -src=&quot;sample/*.jpg&quot; -dest=&quot;sample/movie.gif&quot; -cropleft=100 -croptop=280 -cropwidth=550 -cropheight=351 -scale=0.5 -rotate=270 -verbose
+</code></pre>
+
+<p>The original frames are processed into an animated GIF below showing  only the LCD Panel</p>
+
+<p><img alt="ArdGrafix6100 Screenshot" class="pure-img-responsive" src="/img/00000002.jpg" />
+<img alt="ArdGrafix6100 Screenshot" class="pure-img-responsive" src="/img/ardgrafix6100demo.gif" /></p>
+
+<h2 id="toc_9">License</h2>
+
+<p>GoAniGiffy code is licensed under the <a href="https://github.com/srinathh/goanigiffy/blob/master/LICENSE">Apache v2.0</a> license.
+All other media files &amp; documentation in the repository is licened under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+
+                    </div>
+                </section>
+            </div>
+            
+                <div id="disqus_thread"></div>
+    <script type="text/javascript">
+         
+        var disqus_shortname = 'srinathhgithubio'; 
+
+         
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+            <div class="footer">
+    <div class="pure-menu pure-menu-horizontal pure-menu-open">
+        <ul>
+            <li><a href="#">&copy; 2014, Hariharan Srinath</a></li>
+            <li><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Attribution-ShareAlike 4.0 International License" style="border-width:0" src="/img/ccbysa.png" /></a></li>
+            <li><a href="http://purecss.io">Pure CSS</a></li>
+            <li><a href="http://hugo.spf13.com">Hugo</a></li>
+        </ul>
+    </div>
+</div>
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    </div>
+</div>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+</body>
+</html>

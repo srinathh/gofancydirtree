@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Color on Curiosity &amp; the Geek Blog </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>/tags/color/index.xml/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Sun, 05 Oct 2014 13:27:02 IST</updated>
+    
+    <item>
+      <title>A color theme based on the Nile</title>
+      <link>/blog/nile-color-theme/</link>
+      <pubDate>Sun, 05 Oct 2014 13:27:02 IST</pubDate>
+      
+      <guid>/blog/nile-color-theme/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://adobe.ly/1xRo7U6&#34; alt=&#34;Click to open in Adobe Kuler&#34;&gt;
+&lt;img alt=&#34;Nile color theme&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/nile.svg&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;A lazy cruise down the &lt;a href=&#34;http://en.wikipedia.org/wiki/Nile&#34;&gt;Nile river&lt;/a&gt; from Aswan to Luxor with
+stops at archeological sites was of the more memorable experiences my wife and I enjoyed in Egypt.
+What struck us most was the unique blend of colors on the Nile riverbank that arises due to the fact
+that in much of Egypt, the civilization is but a thin cultivated strip of green on either side of
+the river in the middle of the desert under the largely cloudless blue sky.  After my wife &amp;amp; I
+recently reminiscenced about our trip, I tried to convert our memories of colors into the color
+theme above.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&#34;Nile riverbank&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/Nile.jpg&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

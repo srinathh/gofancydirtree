@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Lcd on Curiosity &amp; the Geek Blog </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>/tags/lcd/index.xml/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Mon, 25 Aug 2014 04:23:21 UTC</updated>
+    
+    <item>
+      <title>ArdGrafix6100: Fast Arduino driver for Nokia 6100 Color LCDs</title>
+      <link>/opensource/ardgrafix6100/</link>
+      <pubDate>Mon, 25 Aug 2014 04:23:21 UTC</pubDate>
+      
+      <guid>/opensource/ardgrafix6100/</guid>
+      <description>
+
+&lt;p&gt;ArdGrafix6100 is a fast and full-featured graphics library for interfacing the Nokia 6100 color
+graphics LCD with Arduino. It uses hardware SPI &amp;amp; block write features of the graphics controller
+on the LCD to boost graphics performance &amp;amp; supports advanced features like proportional fonts
+in a tiny RAM footprint. The Philips PF8833 controller is currently supported.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&#34;ArdGrafix6100 Screenshot&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/ardgrafix6100.jpg&#34; /&gt;
+&lt;img alt=&#34;ArdGrafix6100 Screenshot&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/ardgrafix6100demo.gif&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Download&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://code.google.com/p/ardgrafix6100/&#34;&gt;Get the Library&lt;/a&gt; from Google Code&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Fast&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Uses ATmega SPI peripherals &amp;amp; ports for high - performance graphics&lt;/li&gt;
+&lt;li&gt;Uses block-write features of LCD controller to speed up writes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Full Featured&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Supports Proportional Fonts - a 14px height font is included by default!&lt;/li&gt;
+&lt;li&gt;Implements all standard graphic primitives &amp;amp; utility classes like &amp;ldquo;xy&amp;rdquo;, &amp;ldquo;rectangle&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Practical&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fonts implemented programatically using OOP to conserve SRAM&lt;/li&gt;
+&lt;li&gt;Uses only AVR LIBC functions to ensure easy portability beyond Arduino&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_4&#34;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;Apache License, Version 2.0&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Opensource on Curiosity &amp; the Geek Blog </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>/tags/opensource/index.xml/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Sun, 31 Aug 2014 05:31:44 UTC</updated>
+    
+    <item>
+      <title>GoAniGiffy: A versatile animated GIF creator</title>
+      <link>/opensource/goanigiffy/</link>
+      <pubDate>Sun, 31 Aug 2014 05:31:44 UTC</pubDate>
+      
+      <guid>/opensource/goanigiffy/</guid>
+      <description>
+
+&lt;p&gt;Animated GIFs have made a comeback as very convenient ways to post short video clips or slideshows on the web
+without needing Flash, YouTube or Flickr embedding. Their convenience often outweights image quality limitations
+(only 256 colors palette) and poor compression for basic uses.&lt;/p&gt;
+
+&lt;p&gt;While a number of free web services have sprung up to convert videos to animated GIFs, they do not typically
+allow editing beyond basic trimming. You &lt;em&gt;could&lt;/em&gt; use a traditional video editor of course but the free ones
+are not exactly intuitive and have limited utility in creating slideshows.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;GoAniGiffy&lt;/h2&gt;
+
+&lt;p&gt;GoAniGiffy is a small utility written in &lt;a href=&#34;http://www.golang.org&#34;&gt;Go Programming language&lt;/a&gt; that was born out
+of the need to convert my &lt;a href=&#34;https://www.youtube.com/watch?v=esBDMSmbg3E&#34;&gt;demo video&lt;/a&gt; of
+&lt;a href=&#34;/opensource/ardgrafix6100/&#34;&gt;ArdGrafix6100&lt;/a&gt; into an &lt;a href=&#34;/img/ardgrafix6100demo.gif&#34;&gt;animated GIF&lt;/a&gt; for
+hosting on GitHub Pages. This video was originally shot on a phone camera and I wanted to crop it
+to show only the LCD Display with some scaling and rotation. I tried MPlayer first but found it does
+not use good dithering in downsampling the video to 256 colors for GIFs resulting in poor splotchy images.&lt;/p&gt;
+
+&lt;p&gt;GoAniGiffy converts a set of alphabetically sorted image files (eg. video frames extracted as JPEGs)
+into an animated GIF with the options to crop, scale, rotate &amp;amp; flip source images. Downsampling
+and Scaling are done with high quality algorithms from the &lt;code&gt;github.com/disintegration/imaging&lt;/code&gt; library by
+&lt;a href=&#34;https://www.github.com/disintegration/imaging&#34;&gt;Grigory Dryapak&lt;/a&gt; and the &lt;a href=&#34;http://golang.org/pkg/image/draw/#Drawer&#34;&gt;Go Standard Library&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Download&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/srinathh/goanigiffy/tree/master/binaries&#34;&gt;Zipped executable binaries&lt;/a&gt; are available for Linux
+&amp;amp; Windows in both 32 bit &amp;amp; 64 bit flavors. Download the zip appropriate to your OS and extract somewhere in your
+system PATH.  If you want to &lt;a href=&#34;https://github.com/srinathh/goanigiffy&#34;&gt;build from source&lt;/a&gt; &lt;code&gt;go get&lt;/code&gt; should fetch the imported libraries &amp;amp; build the utility
+in your $GOPATH/bin.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;go get github.com/srinathh/goanigiffy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;GoAniGiffy is a command line utility to be used from the terminal - no GUIs for the present. Use GoAniGiffy with
+a command line of the form below. All parameters are optional and have sane default values.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;goanigiffy -src=&amp;quot;&amp;lt;file name pattern&amp;gt;&amp;quot; -&amp;lt;option&amp;gt;=&amp;lt;value&amp;gt; -&amp;lt;option&amp;gt;=&amp;lt;value&amp;gt;... -dest=&amp;quot;&amp;lt;gif file name&amp;gt;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;Image Options&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-src = &amp;quot;&amp;lt;file name pattern&amp;gt;&amp;quot;&lt;/code&gt;&lt;br /&gt;
+This specifies the input images using a file name pattern. You can use
+standard wildcards or a &lt;a href=&#34;http://golang.org/pkg/path/filepath/#Match&#34;&gt;more complex pattern&lt;/a&gt; supported by
+the &lt;code&gt;path/filepath&lt;/code&gt; package in Go Language. GoAniGiffy will find matching files and sort them
+alphabetically before processing which makes it easy to use GoAniGiffy with numbered image frames extracted
+from videos.  If you do not specfiy &lt;code&gt;-src&lt;/code&gt;, GoAniGiffy will use &lt;code&gt;&amp;quot;*.jpg&amp;quot;&lt;/code&gt; as the file pattern.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-dest=&amp;quot;&amp;lt;gif file name&amp;gt;&amp;quot;&lt;/code&gt;&lt;br /&gt;
+This specifies the file name and path for the output gif file. If you do not specifiy an
+output file, GoAniGiffy will by default create &amp;ldquo;movie.gif&amp;rdquo; in the current folder.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-delay=&amp;lt;integer value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+This specifies the delay between frames of the image in multiples of hundredths of a second.
+A value of 3 which is the default should theoritically give you 33 frames per second close to the default video speed.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;Cropping Options&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-cropleft=&amp;lt;integer value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want to crop the images, specify the left co-ordinate of the top-left corner of the
+rectangle you would like to crop here. The default value is 0&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-croptop=&amp;lt;integer value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want to crop the images, specify the top co-ordinate of the top-left corner of the
+rectangle you would like to crop here. The default value is 0&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-cropwidth=&amp;lt;integer value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want to crop the images, specify the width of the rectangle you would like to crop
+here. The default value is -1 which specifies the full image width.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-cropheigh=&amp;lt;integer value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want to crop the images, specify the height of the rectangle you would like to crop
+here. The default value is -1 which specifies the full image height.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_5&#34;&gt;Other Image Editing Options&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-scale=&amp;lt;decimal value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want to scale the images, specify a scaling factor here in terms of decimals. For instance
+to make the animated GIF half the size as source images use -scale=0.5. The default value is 1.0
+which specifies no scaling&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-rotate=&amp;lt;0 or 90 or 180 or 270&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want the images to be rotated, specify the rotation angle in degrees here. Arbitrary
+rotations are not supported and you can only use 90, 180 or 270. The default value is 0 which specifies no rotation&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-flip=&amp;lt;&amp;quot;none&amp;quot; or &amp;quot;horizontal&amp;quot; or &amp;quot;vertical&amp;quot;&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want the images to be flipped, specify &amp;ldquo;horizontal&amp;rdquo; or
+&amp;ldquo;vertical&amp;rdquo; here. The default value is &amp;ldquo;none&amp;rdquo; which specifies no flipping&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_6&#34;&gt;Other Options&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-verbose&lt;/code&gt;&lt;br /&gt;
+By default GoAniGiffy will process the files and exit without any messages unless there is an error.
+Specifying -verbose will show in-process messages as the individual frames get processed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_7&#34;&gt;Extracting Frames from Video&lt;/h2&gt;
+
+&lt;p&gt;If you want to convert a video to an animated GIF, you first need to extract frames. I use &lt;a href=&#34;http://www.mplayerhq.hu/&#34;&gt;MPlayer&lt;/a&gt;
+with a command line like below to extract JPEG frames. The &lt;code&gt;-ss 6 -endpos 8&lt;/code&gt; options specify extraction between the 6th and 8th seconds&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mplayer -vo jpeg:quality=80 -nosound -ss 6 -endpos 8 vid.mp4
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_8&#34;&gt;Example&lt;/h2&gt;
+
+&lt;p&gt;This command line creates a movie.gif from the images in the &lt;a href=&#34;https://github.com/srinathh/goanigiffy/tree/master/sample&#34;&gt;sample folder&lt;/a&gt;
+of the source repository.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;goanigiffy -src=&amp;quot;sample/*.jpg&amp;quot; -dest=&amp;quot;sample/movie.gif&amp;quot; -cropleft=100 -croptop=280 -cropwidth=550 -cropheight=351 -scale=0.5 -rotate=270 -verbose
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The original frames are processed into an animated GIF below showing  only the LCD Panel&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&#34;ArdGrafix6100 Screenshot&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/00000002.jpg&#34; /&gt;
+&lt;img alt=&#34;ArdGrafix6100 Screenshot&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/ardgrafix6100demo.gif&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_9&#34;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;GoAniGiffy code is licensed under the &lt;a href=&#34;https://github.com/srinathh/goanigiffy/blob/master/LICENSE&#34;&gt;Apache v2.0&lt;/a&gt; license.
+All other media files &amp;amp; documentation in the repository is licened under &lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-sa/4.0/&#34;&gt;Creative Commons Attribution-ShareAlike 4.0 International License&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ArdGrafix6100: Fast Arduino driver for Nokia 6100 Color LCDs</title>
+      <link>/opensource/ardgrafix6100/</link>
+      <pubDate>Mon, 25 Aug 2014 04:23:21 UTC</pubDate>
+      
+      <guid>/opensource/ardgrafix6100/</guid>
+      <description>
+
+&lt;p&gt;ArdGrafix6100 is a fast and full-featured graphics library for interfacing the Nokia 6100 color
+graphics LCD with Arduino. It uses hardware SPI &amp;amp; block write features of the graphics controller
+on the LCD to boost graphics performance &amp;amp; supports advanced features like proportional fonts
+in a tiny RAM footprint. The Philips PF8833 controller is currently supported.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&#34;ArdGrafix6100 Screenshot&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/ardgrafix6100.jpg&#34; /&gt;
+&lt;img alt=&#34;ArdGrafix6100 Screenshot&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/ardgrafix6100demo.gif&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Download&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://code.google.com/p/ardgrafix6100/&#34;&gt;Get the Library&lt;/a&gt; from Google Code&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Fast&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Uses ATmega SPI peripherals &amp;amp; ports for high - performance graphics&lt;/li&gt;
+&lt;li&gt;Uses block-write features of LCD controller to speed up writes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Full Featured&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Supports Proportional Fonts - a 14px height font is included by default!&lt;/li&gt;
+&lt;li&gt;Implements all standard graphic primitives &amp;amp; utility classes like &amp;ldquo;xy&amp;rdquo;, &amp;ldquo;rectangle&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Practical&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fonts implemented programatically using OOP to conserve SRAM&lt;/li&gt;
+&lt;li&gt;Uses only AVR LIBC functions to ensure easy portability beyond Arduino&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_4&#34;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;Apache License, Version 2.0&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>FullScreenWrapper2: Python GUI framework for Android</title>
+      <link>/opensource/fullscreenwrapper/</link>
+      <pubDate>Sun, 24 Aug 2014 04:24:12 UTC</pubDate>
+      
+      <guid>/opensource/fullscreenwrapper/</guid>
+      <description>
+
+&lt;p&gt;FullScreenWapper2 is a GUI Framework for developing full screen apps using the FullScreenUI API functions provided by
+&lt;a href=&#34;https://code.google.com/p/android-scripting/&#34;&gt;Scripting Layer for Android (SL4A)&lt;/a&gt; using &lt;a href=&#34;Shttps://code.google.com/p/python-for-android/&#34;&gt;Python-for-Android&lt;/a&gt;
+It enables Python SL4A scripts to get a look &amp;amp; feel similar to Android Java apps using the same Views used by native
+Java apps XML Layouts and provides pythonic access to events.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Features&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Managed eventloop &amp;amp; a layout stack enabling easy parent-&amp;gt;child-&amp;gt;parent transitions&lt;/li&gt;
+&lt;li&gt;EventHandler classes with event-matching functions pre-built for standard View events like click,itemclick(ListView) and key&lt;/li&gt;
+&lt;li&gt;Device Sensors &amp;amp; other similar SL4A/Custom events can also be caught &amp;amp; managed eventloop + EventHandler class&lt;/li&gt;
+&lt;li&gt;Pythonic access to the views and properties of the layout (ie. MainLayout.views.txt_label.background = &amp;ldquo;#FFAA00AA&amp;rdquo;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Get it&lt;/h2&gt;
+
+&lt;p&gt;Full documentation &amp;amp; library download is available at the &lt;a href=&#34;https://code.google.com/p/python-for-android/wiki/fullscreenwrapper2&#34;&gt;Python-for-Android Wiki&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Framework Overview&lt;/h2&gt;
+
+&lt;p&gt;&lt;img alt=&#34;FullScreenWrapper2 framework design&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/fullscreenwrapper2.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Screenshots&lt;/h2&gt;
+
+&lt;p&gt;&lt;img alt=&#34;FullScreenWrapper2 framework design&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/fullscreenwrapper2_demo_screenshots.png&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

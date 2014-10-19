@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Blog on Curiosity &amp; the Geek Blog </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>/blog/index.xml/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Sun, 05 Oct 2014 13:27:02 IST</updated>
+    
+    <item>
+      <title>A color theme based on the Nile</title>
+      <link>/blog/nile-color-theme/</link>
+      <pubDate>Sun, 05 Oct 2014 13:27:02 IST</pubDate>
+      
+      <guid>/blog/nile-color-theme/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://adobe.ly/1xRo7U6&#34; alt=&#34;Click to open in Adobe Kuler&#34;&gt;
+&lt;img alt=&#34;Nile color theme&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/nile.svg&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;A lazy cruise down the &lt;a href=&#34;http://en.wikipedia.org/wiki/Nile&#34;&gt;Nile river&lt;/a&gt; from Aswan to Luxor with
+stops at archeological sites was of the more memorable experiences my wife and I enjoyed in Egypt.
+What struck us most was the unique blend of colors on the Nile riverbank that arises due to the fact
+that in much of Egypt, the civilization is but a thin cultivated strip of green on either side of
+the river in the middle of the desert under the largely cloudless blue sky.  After my wife &amp;amp; I
+recently reminiscenced about our trip, I tried to convert our memories of colors into the color
+theme above.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&#34;Nile riverbank&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/Nile.jpg&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Making Android Studio (or Eclipse ADT) work on 64-bit Ubuntu Saucy 13.10 or Trusty 14.04</title>
+      <link>/blog/android-studio-on-trusty/</link>
+      <pubDate>Sun, 14 Sep 2014 06:10:34 IST</pubDate>
+      
+      <guid>/blog/android-studio-on-trusty/</guid>
+      <description>
+
+&lt;h2 id=&#34;toc_0&#34;&gt;The Issue&lt;/h2&gt;
+
+&lt;p&gt;Getting Android Studio (or Eclipse Android Development Tools) to run successfully on 64-bit (ie. amd64)
+installations of the newer Ubuntu (or underlying Debian) distributions like Trusty Thar (14.04)
+is not a very straightforward process. While the IDE you download itself will work assuming you have JDK
+installed, it will throw a bunch of build errors when you try to build any app.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Why does this happen&lt;/h2&gt;
+
+&lt;p&gt;The build errors happen because the Android &lt;code&gt;build-tools&lt;/code&gt; are actually 32-bit (ie. i386) binaries dynamically linked
+to several 32-bit libraries. For instance, this is what the the &lt;code&gt;file&lt;/code&gt; outputs on my installation
+of the &lt;code&gt;aapt&lt;/code&gt; tool in the &lt;code&gt;build-tools&lt;/code&gt; folder within the sdk
+    file aapt
+    aapt: ELF 32-bit LSB  shared object, Intel 80386, version 1 (SYSV), dynamically linked
+    (uses shared libs), for GNU/Linux 2.6.8, not stripped&lt;/p&gt;
+
+&lt;p&gt;While the 64-bit installations of Linux can run 32-bit binaries, they do not come pre-installed with
+the necessary 32-bit libraries pre-installed. Googling throws up dozens of posts advising installation
+of the &lt;code&gt;ia32-libs&lt;/code&gt; but this advise is unfortunately outdated. Newer versions of Ubuntu from 13.10 Saucy
+onwards have &lt;a href=&#34;http://askubuntu.com/questions/359156/how-do-you-run-a-32-bit-program-on-a-64-bit-version-of-ubuntu/359184#359184&#34;&gt;removed&lt;/a&gt;
+the &lt;code&gt;ia32-libs&lt;/code&gt; package and rely fully on &lt;a href=&#34;https://wiki.debian.org/Multiarch&#34;&gt;Multiarch&lt;/a&gt; which is a
+much more comprehensive solution.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;The Solution&lt;/h2&gt;
+
+&lt;p&gt;To get Android Studio (or Eclipse ADT) build properly on the newer 64 bit Ubuntu releases like 13.10
+Saucy or 14.04 Trusty you need to add the 32-bit i386 library dependencies as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo dpkg --add-architecture i386
+sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s it! You shouldn&amp;rsquo;t get the build errors any more! Happy app development!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Using FuseCompress to compress folders in Ubuntu</title>
+      <link>/blog/fusecompress-on-ubuntu/</link>
+      <pubDate>Sat, 30 Aug 2014 09:06:32 UTC</pubDate>
+      
+      <guid>/blog/fusecompress-on-ubuntu/</guid>
+      <description>
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Why consider using Fusecompress&lt;/h2&gt;
+
+&lt;p&gt;Many light-weight Notebooks and all Chromebooks today come with balzingly fast but
+limited capacity Solid State Drives (SSDs) on the theory that people store much of
+their data in the cloud. However, to use these as Android development machines,
+you typically do need to store space hogs like sources and library documentation,
+emulator images etc locally.&lt;/p&gt;
+
+&lt;p&gt;Fusecompress is a great little legacy utility that uses the FUSE (File System
+in User Space) library to provide an on the fly compressed mountable filesystem
+that in effect lets you compress specific directories in manner completely
+transparent to all other programs.&lt;/p&gt;
+
+&lt;p&gt;I use my HP Chromebook 14 loaded with Ubuntu 14.04 via the ChrUbuntu on a lean
+9GB partition as my primary development machine. I use fusecompress to compress
+offline documentation for Android and Python and the huge Android Emulator
+system images. This reduces the SSD footprint considerably with barely any impact
+on load times. The Emulator startup does become significantly slower but I need to
+to do this only once each session.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Installing fusecompress on Ubuntu 14.04&lt;/h2&gt;
+
+&lt;p&gt;Fusecompress however is not available in the standard Ubuntu repositories and
+must be compiled from source. Given the legacy nature of the codebase, it&amp;rsquo;s
+a bit tricky to compile for novices. This blog post outlines the process step-by-step.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install Aptitude&lt;/strong&gt;&lt;br /&gt;
+When I was using apt-get to install the dependency library sources, I found in
+a couple of cases the latest development releases of the libraries had
+conflicts and I had to regress to the previous version to install them.
+Aptitude does a much better job of solving for conflicts&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install aptitude
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install the auto build tools&lt;/strong&gt;&lt;br /&gt;
+If they&amp;rsquo;re not installed on your system already, you&amp;rsquo;ll need to install
+autoconf and automake to be able to build from source.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install autoconf automake libtool
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install compression algorithms development packages&lt;/strong&gt;&lt;br /&gt;
+Next install the development packages for compression algorithms supported
+by fusecompress - LZO, LZMA, ZLib &amp;amp; BZ2. I ran into trouble in the LZO package
+where I had to revert from the 2.06-1.2ubuntu1.1 version to 2.06-1.2ubuntu1
+version. Aptitude gives you a series of menu choices to handle this smoothly&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install zlib1g-dev libbz2-dev liblzma-dev liblzo2-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install the FUSE development package&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install libfuse-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Download the fusecompress sources&lt;/strong&gt;&lt;br /&gt;
+You can checkout the fusecompress source from Google Code with SubVersion.
+In today&amp;rsquo;s world of distributed version control systems like Git &amp;amp; Mercurial,
+using SubVersion may seem quaint but that&amp;rsquo;s the cost of using a stable legacy
+package like FuseCompress.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install subversion
+svn checkout http://fusecompress.googlecode.com/svn/trunk/ fusecompress-read-only
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Run the fusecompress build process
+Change to the folder where you&amp;rsquo;ve downloaded the fusecompress sources and
+run the following commands. Put the generated fusecompress binary somewhere
+in your system path.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./autogen.sh
+./configure
+make
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Using fusecompress&lt;/h2&gt;
+
+&lt;p&gt;The least disruptive way I found to use fusecompress is to simply mount the compressed
+folders exactly where they currently are. The key thing to remember while using
+fusecompress is that it compress files when they get written to disk. So files that
+are already in the folder won&amp;rsquo;t automatically get compressed. The way I typically
+manage this is:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Rename the directory you want to compress&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mv directoryname temporaryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create an empty directory with the old name&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir directoryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Fusecompress the directory&lt;/strong&gt;
+The default compression algorithm used is LZO which is very fast. You can also
+use LZMA as indicated below to get a better compression ratio. You maw want to
+add this line to your ~/.profile to automount on boot.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;fusecompress directoryname
+fusecompress -c lzma directoryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Move back all the contents&lt;/strong&gt;
+Since Fusecompress will now compress each of the files as it is moved back, this
+step will take quite a bit of time depending on the amount of data&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd temporaryname
+mv *.* ../directoryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Hello World Web Servers in Python &amp; Go</title>
+      <link>/blog/simplehttpservers/</link>
+      <pubDate>Sat, 23 Aug 2014 05:59:29 UTC</pubDate>
+      
+      <guid>/blog/simplehttpservers/</guid>
+      <description>
+
+&lt;p&gt;&lt;strong&gt;Note: This is a simple post primarily written to learn markdown&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Hello World programs are the first programs typically introduced in any
+programming language tutorial. However, in our modern era of web applications
+they are not particularly insightful into the strenghts of a language to support
+web development. In this article, we compare Hello World web servers written in
+Python &amp;amp; Go languages.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Go Language&lt;/h2&gt;
+
+&lt;p&gt;The &lt;a href=&#34;http://golang.org/&#34;&gt;Go Language&lt;/a&gt; released by Google is notable for its terse C Language inspired
+syntax (indeed &lt;a href=&#34;http://en.wikipedia.org/wiki/Ken_Thompson is one of the inventors&#34;&gt;Ken Thompson&lt;/a&gt;
+that nevertheless removes a lot of boilerplate. It has a unique approach to concurrency
+and derives high performance from being a compiled language.&lt;/p&gt;
+
+&lt;p&gt;Go comes with extensive support for developing web applications within its
+standard library including a robust templating solution. For serving simple static
+or dynamic driven websites, onerarely need anything more than this.
+For fancier applications, third party libraries provide more complex routers,
+context packages etc. The &lt;a href=&#34;/code/helloworld.go&#34;&gt;Hello World&lt;/a&gt; web server is
+effectively just 3 lines of code and can support many concurrent connections.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;package main
+
+import (
+    &amp;quot;fmt&amp;quot;
+    &amp;quot;log&amp;quot;
+    &amp;quot;net/http&amp;quot;
+)
+
+func main() {
+    http.HandleFunc(&amp;quot;/&amp;quot;, func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, &amp;quot;Hello World&amp;quot;)
+    })
+    log.Fatal(http.ListenAndServe(&amp;quot;:8080&amp;quot;, nil))
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Python&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.python.org/&#34;&gt;Python&lt;/a&gt; is among the simplest of modern programming languages to learn due to its guiding
+philosophy of &lt;a href=&#34;http://legacy.python.org/dev/peps/pep-0020/&#34;&gt;&lt;em&gt;There should be one and preferably only one obvious way to do it&lt;/em&gt;&lt;/a&gt;.
+Python&amp;rsquo;s ease and a large base of mature third party libraries has made it a language
+of choice among startups looking to iterate their minimum viable product quickly accepting
+the performance penalty of an interpreted language.&lt;/p&gt;
+
+&lt;p&gt;Python&amp;rsquo;s standard library has been designed for a prior era and it is definitely
+not as simple to spin up a &lt;a href=&#34;/code/helloworld.py&#34;&gt;Hello World&lt;/a&gt; webserver as in Go.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import BaseHTTPServer
+
+HOST_NAME = &#39;localhost&#39;
+PORT_NUMBER = 8080
+
+class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+    def do_GET(s):
+        s.send_response(200)
+        s.send_header(&amp;quot;Content-type&amp;quot;, &amp;quot;text/text&amp;quot;)
+        s.end_headers()
+        s.wfile.write(&amp;quot;Hello World&amp;quot;)
+
+if __name__ == &#39;__main__&#39;:
+    server_class = BaseHTTPServer.HTTPServer
+    httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    httpd.server_close()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;However modern web development with Python typically relies on one of the
+many third party web frameworks, notably &lt;a href=&#34;https://www.djangoproject.com/&#34;&gt;Django&lt;/a&gt;, to speed up web development.
+As an example, look at the simplification coming from the popular &lt;a href=&#34;http://flask.pocoo.org/&#34;&gt;Flask&lt;/a&gt; micro-framework.
+However, Python&amp;rsquo;s lack of in-built support for easy concurrency means that often,
+jury-rigged solutions need to be employed in production to scale&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from flask import Flask
+app = Flask(__name__)
+
+@app.route(&amp;quot;/&amp;quot;)
+def hello():
+    return &amp;quot;Hello World!&amp;quot;
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    app.run()
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Sl4a on Curiosity &amp; the Geek Blog </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>/tags/sl4a/index.xml/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Sun, 24 Aug 2014 04:24:12 UTC</updated>
+    
+    <item>
+      <title>FullScreenWrapper2: Python GUI framework for Android</title>
+      <link>/opensource/fullscreenwrapper/</link>
+      <pubDate>Sun, 24 Aug 2014 04:24:12 UTC</pubDate>
+      
+      <guid>/opensource/fullscreenwrapper/</guid>
+      <description>
+
+&lt;p&gt;FullScreenWapper2 is a GUI Framework for developing full screen apps using the FullScreenUI API functions provided by
+&lt;a href=&#34;https://code.google.com/p/android-scripting/&#34;&gt;Scripting Layer for Android (SL4A)&lt;/a&gt; using &lt;a href=&#34;Shttps://code.google.com/p/python-for-android/&#34;&gt;Python-for-Android&lt;/a&gt;
+It enables Python SL4A scripts to get a look &amp;amp; feel similar to Android Java apps using the same Views used by native
+Java apps XML Layouts and provides pythonic access to events.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Features&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Managed eventloop &amp;amp; a layout stack enabling easy parent-&amp;gt;child-&amp;gt;parent transitions&lt;/li&gt;
+&lt;li&gt;EventHandler classes with event-matching functions pre-built for standard View events like click,itemclick(ListView) and key&lt;/li&gt;
+&lt;li&gt;Device Sensors &amp;amp; other similar SL4A/Custom events can also be caught &amp;amp; managed eventloop + EventHandler class&lt;/li&gt;
+&lt;li&gt;Pythonic access to the views and properties of the layout (ie. MainLayout.views.txt_label.background = &amp;ldquo;#FFAA00AA&amp;rdquo;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Get it&lt;/h2&gt;
+
+&lt;p&gt;Full documentation &amp;amp; library download is available at the &lt;a href=&#34;https://code.google.com/p/python-for-android/wiki/fullscreenwrapper2&#34;&gt;Python-for-Android Wiki&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Framework Overview&lt;/h2&gt;
+
+&lt;p&gt;&lt;img alt=&#34;FullScreenWrapper2 framework design&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/fullscreenwrapper2.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Screenshots&lt;/h2&gt;
+
+&lt;p&gt;&lt;img alt=&#34;FullScreenWrapper2 framework design&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/fullscreenwrapper2_demo_screenshots.png&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
