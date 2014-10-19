@@ -27,7 +27,7 @@ type Node struct {
 	FullPath string       `json:"-"`
 	Info     *os.FileInfo `json:"-"`
 	Children []*Node      `json:"children,omitempty"`
-	Name     string       `json:"title"`
+	Title    string       `json:"title"`
 	Key      string       `json:"key"`
 	Folder   bool         `json:"folder,omitempty"`
 }
@@ -41,7 +41,7 @@ func getParentPath(path string) string {
 // Create directory hierarchy rooted at the specified path and return a tree structure suitable for json serialization
 // for Fancytree or for tree traversal and hashmap of keys to each node in the tree suitable retreival during client
 // server communication.
-
+//
 // The first return parameter (dirtree) is the tree structure composed of *Node elements that you can
 // straightaway serialize with json.encoder to produce a dataset that can be fed as source to the FancyTree
 // JQuery UI Plugin. See the demo folder in the repository for an example.
@@ -50,7 +50,7 @@ func getParentPath(path string) string {
 // set as values for the "key" element in the Fancytree json dataset and can be used for event communication
 // between the client side javascript and the server without leaking the absolute directory structure in
 // the server
-func NewTree(root string) (*Node, map[string]*Node, error) {
+func NewTree(root string, skiphidden bool) (*Node, map[string]*Node, error) {
 	absRoot, err := filepath.Abs(root)
 	if err != nil {
 		return nil, nil, err
@@ -62,6 +62,10 @@ func NewTree(root string) (*Node, map[string]*Node, error) {
 		if err != nil {
 			return err
 		}
+		if skiphidden && strings.Index(info.Name(), ".") == 0 {
+			return filepath.SkipDir
+		}
+
 		key := doHash(path)
 		parents[key] = &Node{path, &info, []*Node{}, info.Name(), key, info.IsDir()}
 		return nil
@@ -88,5 +92,5 @@ func NewTree(root string) (*Node, map[string]*Node, error) {
 func doHash(s string) string {
 	hasher := fnv.New64()
 	hasher.Write([]byte(s))
-	return hex.EncodeToString(hash.Sum(nil))
+	return hex.EncodeToString(hasher.Sum(nil))
 }
