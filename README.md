@@ -11,11 +11,12 @@ Installation
 
 Usage
 -----
-    dirtree, dirmap, err := gofancydirtree.NewTree("/home/me")
+    dirtree, dirmap, err := gofancydirtree.NewTree("/home/me", true)
 
 This creates a directory hierarchy rooted at the specified path and returns a tree structure suitable 
 for json serialization for Fancytree plugin. the Nodes contain a key that are also coded in a hashmap
-returned suitable for retrieval in client server communication.
+returned suitable for retrieval in client server communication. The second boolean parameter if true
+skips "hidden" directories and files that typically start with a `.` like `.git`
 
 The first return parameter `dirtree` is the tree structure composed of `*Node` elements that you can
 serialize with json.Encoder to produce a `source` to the FancyTree JQuery UI Javascript Plugin. See 

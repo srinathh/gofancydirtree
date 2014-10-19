@@ -3,14 +3,20 @@
 // for servers written in Go Language to display advanced directory trees in modern web browsers. See the
 // demo folder for an example of the usage for this
 //
-// Usage:
-// dirtree, dirmap, err := gofancydirtree.NewTree("/home/me")
+// Usage
 //
-// Home Page: https://github.com/srinathh/gofancydirtree
-// License: https://github.com/srinathh/gofancydirtree/blob/master/LICENSE
+// Call the NewTree() function passing the root of the directory tree you want to create. Pass true as the
+// second parameter if you want to ignore hidden files and directories that begin with a `.`
+//		dirtree, dirmap, err := gofancydirtree.NewTree("/home/me", true)
 //
-// See Also:
+// License
+//
+// https://github.com/srinathh/gofancydirtree/blob/master/LICENSE
+//
+// See Also
+//
 // https://github.com/marcinwyszynski/directory_tree - The Go Package from which this project is forked
+//
 // https://github.com/mar10/fancytree - The JQuery UI Plugin for generating Trees in javascript
 package gofancydirtree
 
@@ -24,12 +30,12 @@ import (
 
 // Node represents a node in a directory tree. FullPath and Info are available but not encoded into JSON
 type Node struct {
-	FullPath string       `json:"-"`
-	Info     *os.FileInfo `json:"-"`
-	Children []*Node      `json:"children,omitempty"`
-	Title    string       `json:"title"`
-	Key      string       `json:"key"`
-	Folder   bool         `json:"folder,omitempty"`
+	FullPath string       `json:"-"`                  //The full file path returned by filepath.Walk()
+	Info     *os.FileInfo `json:"-"`                  //The os.FileInfo structure returned by filepath.Walk()
+	Children []*Node      `json:"children,omitempty"` //The children to this directory tree node
+	Title    string       `json:"title"`              //File or Directory name serialized as title
+	Key      string       `json:"key"`                //Hex encoded fnv64 hash of the FullPath
+	Folder   bool         `json:"folder,omitempty"`   //Is this a folder - ie. Info.IsDir()
 }
 
 // Helper function to get a path's parent path (OS-specific).
@@ -38,18 +44,20 @@ func getParentPath(path string) string {
 	return strings.Join(els[:len(els)-1], string(os.PathSeparator))
 }
 
-// Create directory hierarchy rooted at the specified path and return a tree structure suitable for json serialization
-// for Fancytree or for tree traversal and hashmap of keys to each node in the tree suitable retreival during client
-// server communication.
+// This creates a directory hierarchy rooted at the specified path and returns a tree structure suitable for
+// json serialization for Fancytree plugin. the Nodes contain a key that are also coded in a hashmap returned
+// suitable for retrieval in client server communication. The second boolean parameter if true
+// skips "hidden" directories and files that typically start with a `.` like `.git`
 //
-// The first return parameter (dirtree) is the tree structure composed of *Node elements that you can
-// straightaway serialize with json.encoder to produce a dataset that can be fed as source to the FancyTree
-// JQuery UI Plugin. See the demo folder in the repository for an example.
+// The first return parameter is the tree structure composed of *Node elements that you can serialize with
+// json.Encoder to produce a source to the FancyTree JQuery UI Javascript Plugin. See the demo folder in
+// the repository for an example.
 //
-// The second return parameter (dirmap) is a map of hash keys to individual nodes in the dirtree. these are
-// set as values for the "key" element in the Fancytree json dataset and can be used for event communication
-// between the client side javascript and the server without leaking the absolute directory structure in
-// the server
+// The second return parameter dirmap is a map of hash keys (fnv hashed paths as hex strings) to pointers
+// to individual nodes in the tree structure. These keys are also set as values for the Node.Key element
+// in each node that is emitted as key on JSON serialization. These can be used in Javascript functions
+// to communicate events from the client code back tot he server for individual directories or files
+// without leaking the absolute directory structure in the server
 func NewTree(root string, skiphidden bool) (*Node, map[string]*Node, error) {
 	absRoot, err := filepath.Abs(root)
 	if err != nil {
