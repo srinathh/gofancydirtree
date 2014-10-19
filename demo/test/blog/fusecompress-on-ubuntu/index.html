@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Living at the intersection of Technology, Research, Economics & Art">
+    <link rel="stylesheet" href="/css/pure-min.css">
+    <link rel="stylesheet" href="/css/grids-responsive-min.css">
+    <link rel="stylesheet" href="/css/blog.css">
+    <link rel="stylesheet" href="/css/solarized_light.css">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54341244-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <title>Using FuseCompress to compress folders in Ubuntu</title>
+</head>
+<body>
+
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+    <div class="header">
+        <a href="/"><h1 class="brand-title">Curiosity &amp; the Geek</h1></a>
+        <h2 class="brand-tagline">Life at the intersection of Technology, Insights & Art</h2>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a class="pure-button" href="/">All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="pure-button" href="/blog">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="pure-button" href="/opensource">Opensource</a>
+                </li>
+                <li class="nav-item">
+                    <a class="pure-button" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                <a class="pure-button" href="/index.xml"><img width="11" height="11" src="/img/common/rss.svg" />&nbsp;Subscribe</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+    
+    <div class="content pure-u-1 pure-u-md-3-4">
+            
+            <div class="posts">
+                
+                <section class="post">
+                    <header class="post-header">
+    <img class="post-avatar" alt="Hariharan Srinath" height="48" width="48" src="/img/profilepics/srinath.jpg">
+    <a href="/blog/fusecompress-on-ubuntu/"><h2 class="post-title">Using FuseCompress to compress folders in Ubuntu</h2></a>
+
+    <p class="post-meta">
+        By Hariharan Srinath 
+        
+            <a class="post-category" href="/tags/ubuntu">ubuntu</a>
+        
+            <a class="post-category" href="/tags/fusecompress">fusecompress</a>
+        
+    </p>
+</header>
+
+                     <div class="socialbuttons" style="float:right">
+    <a href="/index.xml"><img width="20" height="20" src="/img/common/rss.svg" /></a>
+    <div class="g-plus" data-action="share" data-annotation="none"></div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="srinathh" data-count="none" data-dnt="true">Tweet</a>
+</div>
+
+
+
+                    <div class="post-description">
+                        
+
+<h2 id="toc_0">Why consider using Fusecompress</h2>
+
+<p>Many light-weight Notebooks and all Chromebooks today come with balzingly fast but
+limited capacity Solid State Drives (SSDs) on the theory that people store much of
+their data in the cloud. However, to use these as Android development machines,
+you typically do need to store space hogs like sources and library documentation,
+emulator images etc locally.</p>
+
+<p>Fusecompress is a great little legacy utility that uses the FUSE (File System
+in User Space) library to provide an on the fly compressed mountable filesystem
+that in effect lets you compress specific directories in manner completely
+transparent to all other programs.</p>
+
+<p>I use my HP Chromebook 14 loaded with Ubuntu 14.04 via the ChrUbuntu on a lean
+9GB partition as my primary development machine. I use fusecompress to compress
+offline documentation for Android and Python and the huge Android Emulator
+system images. This reduces the SSD footprint considerably with barely any impact
+on load times. The Emulator startup does become significantly slower but I need to
+to do this only once each session.</p>
+
+<h2 id="toc_1">Installing fusecompress on Ubuntu 14.04</h2>
+
+<p>Fusecompress however is not available in the standard Ubuntu repositories and
+must be compiled from source. Given the legacy nature of the codebase, it&rsquo;s
+a bit tricky to compile for novices. This blog post outlines the process step-by-step.</p>
+
+<ol>
+<li><p><strong>Install Aptitude</strong><br />
+When I was using apt-get to install the dependency library sources, I found in
+a couple of cases the latest development releases of the libraries had
+conflicts and I had to regress to the previous version to install them.
+Aptitude does a much better job of solving for conflicts</p>
+
+<pre><code>sudo apt-get install aptitude
+</code></pre></li>
+
+<li><p><strong>Install the auto build tools</strong><br />
+If they&rsquo;re not installed on your system already, you&rsquo;ll need to install
+autoconf and automake to be able to build from source.</p>
+
+<pre><code>sudo aptitude install autoconf automake libtool
+</code></pre></li>
+
+<li><p><strong>Install compression algorithms development packages</strong><br />
+Next install the development packages for compression algorithms supported
+by fusecompress - LZO, LZMA, ZLib &amp; BZ2. I ran into trouble in the LZO package
+where I had to revert from the 2.06-1.2ubuntu1.1 version to 2.06-1.2ubuntu1
+version. Aptitude gives you a series of menu choices to handle this smoothly</p>
+
+<pre><code>sudo aptitude install zlib1g-dev libbz2-dev liblzma-dev liblzo2-dev
+</code></pre></li>
+
+<li><p><strong>Install the FUSE development package</strong></p>
+
+<pre><code>sudo aptitude install libfuse-dev
+</code></pre></li>
+
+<li><p><strong>Download the fusecompress sources</strong><br />
+You can checkout the fusecompress source from Google Code with SubVersion.
+In today&rsquo;s world of distributed version control systems like Git &amp; Mercurial,
+using SubVersion may seem quaint but that&rsquo;s the cost of using a stable legacy
+package like FuseCompress.</p>
+
+<pre><code>sudo aptitude install subversion
+svn checkout http://fusecompress.googlecode.com/svn/trunk/ fusecompress-read-only
+</code></pre></li>
+
+<li><p>Run the fusecompress build process
+Change to the folder where you&rsquo;ve downloaded the fusecompress sources and
+run the following commands. Put the generated fusecompress binary somewhere
+in your system path.</p>
+
+<pre><code>./autogen.sh
+./configure
+make
+</code></pre></li>
+</ol>
+
+<h2 id="toc_2">Using fusecompress</h2>
+
+<p>The least disruptive way I found to use fusecompress is to simply mount the compressed
+folders exactly where they currently are. The key thing to remember while using
+fusecompress is that it compress files when they get written to disk. So files that
+are already in the folder won&rsquo;t automatically get compressed. The way I typically
+manage this is:</p>
+
+<ol>
+<li><p><strong>Rename the directory you want to compress</strong></p>
+
+<pre><code>mv directoryname temporaryname
+</code></pre></li>
+
+<li><p><strong>Create an empty directory with the old name</strong></p>
+
+<pre><code>mkdir directoryname
+</code></pre></li>
+
+<li><p><strong>Fusecompress the directory</strong>
+The default compression algorithm used is LZO which is very fast. You can also
+use LZMA as indicated below to get a better compression ratio. You maw want to
+add this line to your ~/.profile to automount on boot.</p>
+
+<pre><code>fusecompress directoryname
+fusecompress -c lzma directoryname
+</code></pre></li>
+
+<li><p><strong>Move back all the contents</strong>
+Since Fusecompress will now compress each of the files as it is moved back, this
+step will take quite a bit of time depending on the amount of data</p>
+
+<pre><code>cd temporaryname
+mv *.* ../directoryname
+</code></pre></li>
+</ol>
+
+                    </div>
+                </section>
+            </div>
+            
+                <div id="disqus_thread"></div>
+    <script type="text/javascript">
+         
+        var disqus_shortname = 'srinathhgithubio'; 
+
+         
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+            <div class="footer">
+    <div class="pure-menu pure-menu-horizontal pure-menu-open">
+        <ul>
+            <li><a href="#">&copy; 2014, Hariharan Srinath</a></li>
+            <li><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Attribution-ShareAlike 4.0 International License" style="border-width:0" src="/img/ccbysa.png" /></a></li>
+            <li><a href="http://purecss.io">Pure CSS</a></li>
+            <li><a href="http://hugo.spf13.com">Hugo</a></li>
+        </ul>
+    </div>
+</div>
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    </div>
+</div>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+</body>
+</html>

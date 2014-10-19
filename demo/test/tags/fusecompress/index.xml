@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Fusecompress on Curiosity &amp; the Geek Blog </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>/tags/fusecompress/index.xml/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Sat, 30 Aug 2014 09:06:32 UTC</updated>
+    
+    <item>
+      <title>Using FuseCompress to compress folders in Ubuntu</title>
+      <link>/blog/fusecompress-on-ubuntu/</link>
+      <pubDate>Sat, 30 Aug 2014 09:06:32 UTC</pubDate>
+      
+      <guid>/blog/fusecompress-on-ubuntu/</guid>
+      <description>
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Why consider using Fusecompress&lt;/h2&gt;
+
+&lt;p&gt;Many light-weight Notebooks and all Chromebooks today come with balzingly fast but
+limited capacity Solid State Drives (SSDs) on the theory that people store much of
+their data in the cloud. However, to use these as Android development machines,
+you typically do need to store space hogs like sources and library documentation,
+emulator images etc locally.&lt;/p&gt;
+
+&lt;p&gt;Fusecompress is a great little legacy utility that uses the FUSE (File System
+in User Space) library to provide an on the fly compressed mountable filesystem
+that in effect lets you compress specific directories in manner completely
+transparent to all other programs.&lt;/p&gt;
+
+&lt;p&gt;I use my HP Chromebook 14 loaded with Ubuntu 14.04 via the ChrUbuntu on a lean
+9GB partition as my primary development machine. I use fusecompress to compress
+offline documentation for Android and Python and the huge Android Emulator
+system images. This reduces the SSD footprint considerably with barely any impact
+on load times. The Emulator startup does become significantly slower but I need to
+to do this only once each session.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Installing fusecompress on Ubuntu 14.04&lt;/h2&gt;
+
+&lt;p&gt;Fusecompress however is not available in the standard Ubuntu repositories and
+must be compiled from source. Given the legacy nature of the codebase, it&amp;rsquo;s
+a bit tricky to compile for novices. This blog post outlines the process step-by-step.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install Aptitude&lt;/strong&gt;&lt;br /&gt;
+When I was using apt-get to install the dependency library sources, I found in
+a couple of cases the latest development releases of the libraries had
+conflicts and I had to regress to the previous version to install them.
+Aptitude does a much better job of solving for conflicts&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install aptitude
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install the auto build tools&lt;/strong&gt;&lt;br /&gt;
+If they&amp;rsquo;re not installed on your system already, you&amp;rsquo;ll need to install
+autoconf and automake to be able to build from source.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install autoconf automake libtool
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install compression algorithms development packages&lt;/strong&gt;&lt;br /&gt;
+Next install the development packages for compression algorithms supported
+by fusecompress - LZO, LZMA, ZLib &amp;amp; BZ2. I ran into trouble in the LZO package
+where I had to revert from the 2.06-1.2ubuntu1.1 version to 2.06-1.2ubuntu1
+version. Aptitude gives you a series of menu choices to handle this smoothly&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install zlib1g-dev libbz2-dev liblzma-dev liblzo2-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install the FUSE development package&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install libfuse-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Download the fusecompress sources&lt;/strong&gt;&lt;br /&gt;
+You can checkout the fusecompress source from Google Code with SubVersion.
+In today&amp;rsquo;s world of distributed version control systems like Git &amp;amp; Mercurial,
+using SubVersion may seem quaint but that&amp;rsquo;s the cost of using a stable legacy
+package like FuseCompress.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install subversion
+svn checkout http://fusecompress.googlecode.com/svn/trunk/ fusecompress-read-only
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Run the fusecompress build process
+Change to the folder where you&amp;rsquo;ve downloaded the fusecompress sources and
+run the following commands. Put the generated fusecompress binary somewhere
+in your system path.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./autogen.sh
+./configure
+make
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Using fusecompress&lt;/h2&gt;
+
+&lt;p&gt;The least disruptive way I found to use fusecompress is to simply mount the compressed
+folders exactly where they currently are. The key thing to remember while using
+fusecompress is that it compress files when they get written to disk. So files that
+are already in the folder won&amp;rsquo;t automatically get compressed. The way I typically
+manage this is:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Rename the directory you want to compress&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mv directoryname temporaryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create an empty directory with the old name&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir directoryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Fusecompress the directory&lt;/strong&gt;
+The default compression algorithm used is LZO which is very fast. You can also
+use LZMA as indicated below to get a better compression ratio. You maw want to
+add this line to your ~/.profile to automount on boot.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;fusecompress directoryname
+fusecompress -c lzma directoryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Move back all the contents&lt;/strong&gt;
+Since Fusecompress will now compress each of the files as it is moved back, this
+step will take quite a bit of time depending on the amount of data&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd temporaryname
+mv *.* ../directoryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

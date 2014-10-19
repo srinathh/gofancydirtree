@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Recent Content on Curiosity &amp; the Geek Blog </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>/index.xml/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Sun, 05 Oct 2014 13:27:02 IST</updated>
+    
+    <item>
+      <title>A color theme based on the Nile</title>
+      <link>/blog/nile-color-theme/</link>
+      <pubDate>Sun, 05 Oct 2014 13:27:02 IST</pubDate>
+      
+      <guid>/blog/nile-color-theme/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://adobe.ly/1xRo7U6&#34; alt=&#34;Click to open in Adobe Kuler&#34;&gt;
+&lt;img alt=&#34;Nile color theme&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/nile.svg&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;A lazy cruise down the &lt;a href=&#34;http://en.wikipedia.org/wiki/Nile&#34;&gt;Nile river&lt;/a&gt; from Aswan to Luxor with
+stops at archeological sites was of the more memorable experiences my wife and I enjoyed in Egypt.
+What struck us most was the unique blend of colors on the Nile riverbank that arises due to the fact
+that in much of Egypt, the civilization is but a thin cultivated strip of green on either side of
+the river in the middle of the desert under the largely cloudless blue sky.  After my wife &amp;amp; I
+recently reminiscenced about our trip, I tried to convert our memories of colors into the color
+theme above.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&#34;Nile riverbank&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/Nile.jpg&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Making Android Studio (or Eclipse ADT) work on 64-bit Ubuntu Saucy 13.10 or Trusty 14.04</title>
+      <link>/blog/android-studio-on-trusty/</link>
+      <pubDate>Sun, 14 Sep 2014 06:10:34 IST</pubDate>
+      
+      <guid>/blog/android-studio-on-trusty/</guid>
+      <description>
+
+&lt;h2 id=&#34;toc_0&#34;&gt;The Issue&lt;/h2&gt;
+
+&lt;p&gt;Getting Android Studio (or Eclipse Android Development Tools) to run successfully on 64-bit (ie. amd64)
+installations of the newer Ubuntu (or underlying Debian) distributions like Trusty Thar (14.04)
+is not a very straightforward process. While the IDE you download itself will work assuming you have JDK
+installed, it will throw a bunch of build errors when you try to build any app.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Why does this happen&lt;/h2&gt;
+
+&lt;p&gt;The build errors happen because the Android &lt;code&gt;build-tools&lt;/code&gt; are actually 32-bit (ie. i386) binaries dynamically linked
+to several 32-bit libraries. For instance, this is what the the &lt;code&gt;file&lt;/code&gt; outputs on my installation
+of the &lt;code&gt;aapt&lt;/code&gt; tool in the &lt;code&gt;build-tools&lt;/code&gt; folder within the sdk
+    file aapt
+    aapt: ELF 32-bit LSB  shared object, Intel 80386, version 1 (SYSV), dynamically linked
+    (uses shared libs), for GNU/Linux 2.6.8, not stripped&lt;/p&gt;
+
+&lt;p&gt;While the 64-bit installations of Linux can run 32-bit binaries, they do not come pre-installed with
+the necessary 32-bit libraries pre-installed. Googling throws up dozens of posts advising installation
+of the &lt;code&gt;ia32-libs&lt;/code&gt; but this advise is unfortunately outdated. Newer versions of Ubuntu from 13.10 Saucy
+onwards have &lt;a href=&#34;http://askubuntu.com/questions/359156/how-do-you-run-a-32-bit-program-on-a-64-bit-version-of-ubuntu/359184#359184&#34;&gt;removed&lt;/a&gt;
+the &lt;code&gt;ia32-libs&lt;/code&gt; package and rely fully on &lt;a href=&#34;https://wiki.debian.org/Multiarch&#34;&gt;Multiarch&lt;/a&gt; which is a
+much more comprehensive solution.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;The Solution&lt;/h2&gt;
+
+&lt;p&gt;To get Android Studio (or Eclipse ADT) build properly on the newer 64 bit Ubuntu releases like 13.10
+Saucy or 14.04 Trusty you need to add the 32-bit i386 library dependencies as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo dpkg --add-architecture i386
+sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s it! You shouldn&amp;rsquo;t get the build errors any more! Happy app development!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>GoAniGiffy: A versatile animated GIF creator</title>
+      <link>/opensource/goanigiffy/</link>
+      <pubDate>Sun, 31 Aug 2014 05:31:44 UTC</pubDate>
+      
+      <guid>/opensource/goanigiffy/</guid>
+      <description>
+
+&lt;p&gt;Animated GIFs have made a comeback as very convenient ways to post short video clips or slideshows on the web
+without needing Flash, YouTube or Flickr embedding. Their convenience often outweights image quality limitations
+(only 256 colors palette) and poor compression for basic uses.&lt;/p&gt;
+
+&lt;p&gt;While a number of free web services have sprung up to convert videos to animated GIFs, they do not typically
+allow editing beyond basic trimming. You &lt;em&gt;could&lt;/em&gt; use a traditional video editor of course but the free ones
+are not exactly intuitive and have limited utility in creating slideshows.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;GoAniGiffy&lt;/h2&gt;
+
+&lt;p&gt;GoAniGiffy is a small utility written in &lt;a href=&#34;http://www.golang.org&#34;&gt;Go Programming language&lt;/a&gt; that was born out
+of the need to convert my &lt;a href=&#34;https://www.youtube.com/watch?v=esBDMSmbg3E&#34;&gt;demo video&lt;/a&gt; of
+&lt;a href=&#34;/opensource/ardgrafix6100/&#34;&gt;ArdGrafix6100&lt;/a&gt; into an &lt;a href=&#34;/img/ardgrafix6100demo.gif&#34;&gt;animated GIF&lt;/a&gt; for
+hosting on GitHub Pages. This video was originally shot on a phone camera and I wanted to crop it
+to show only the LCD Display with some scaling and rotation. I tried MPlayer first but found it does
+not use good dithering in downsampling the video to 256 colors for GIFs resulting in poor splotchy images.&lt;/p&gt;
+
+&lt;p&gt;GoAniGiffy converts a set of alphabetically sorted image files (eg. video frames extracted as JPEGs)
+into an animated GIF with the options to crop, scale, rotate &amp;amp; flip source images. Downsampling
+and Scaling are done with high quality algorithms from the &lt;code&gt;github.com/disintegration/imaging&lt;/code&gt; library by
+&lt;a href=&#34;https://www.github.com/disintegration/imaging&#34;&gt;Grigory Dryapak&lt;/a&gt; and the &lt;a href=&#34;http://golang.org/pkg/image/draw/#Drawer&#34;&gt;Go Standard Library&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Download&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/srinathh/goanigiffy/tree/master/binaries&#34;&gt;Zipped executable binaries&lt;/a&gt; are available for Linux
+&amp;amp; Windows in both 32 bit &amp;amp; 64 bit flavors. Download the zip appropriate to your OS and extract somewhere in your
+system PATH.  If you want to &lt;a href=&#34;https://github.com/srinathh/goanigiffy&#34;&gt;build from source&lt;/a&gt; &lt;code&gt;go get&lt;/code&gt; should fetch the imported libraries &amp;amp; build the utility
+in your $GOPATH/bin.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;go get github.com/srinathh/goanigiffy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;GoAniGiffy is a command line utility to be used from the terminal - no GUIs for the present. Use GoAniGiffy with
+a command line of the form below. All parameters are optional and have sane default values.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;goanigiffy -src=&amp;quot;&amp;lt;file name pattern&amp;gt;&amp;quot; -&amp;lt;option&amp;gt;=&amp;lt;value&amp;gt; -&amp;lt;option&amp;gt;=&amp;lt;value&amp;gt;... -dest=&amp;quot;&amp;lt;gif file name&amp;gt;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;Image Options&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-src = &amp;quot;&amp;lt;file name pattern&amp;gt;&amp;quot;&lt;/code&gt;&lt;br /&gt;
+This specifies the input images using a file name pattern. You can use
+standard wildcards or a &lt;a href=&#34;http://golang.org/pkg/path/filepath/#Match&#34;&gt;more complex pattern&lt;/a&gt; supported by
+the &lt;code&gt;path/filepath&lt;/code&gt; package in Go Language. GoAniGiffy will find matching files and sort them
+alphabetically before processing which makes it easy to use GoAniGiffy with numbered image frames extracted
+from videos.  If you do not specfiy &lt;code&gt;-src&lt;/code&gt;, GoAniGiffy will use &lt;code&gt;&amp;quot;*.jpg&amp;quot;&lt;/code&gt; as the file pattern.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-dest=&amp;quot;&amp;lt;gif file name&amp;gt;&amp;quot;&lt;/code&gt;&lt;br /&gt;
+This specifies the file name and path for the output gif file. If you do not specifiy an
+output file, GoAniGiffy will by default create &amp;ldquo;movie.gif&amp;rdquo; in the current folder.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-delay=&amp;lt;integer value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+This specifies the delay between frames of the image in multiples of hundredths of a second.
+A value of 3 which is the default should theoritically give you 33 frames per second close to the default video speed.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;Cropping Options&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-cropleft=&amp;lt;integer value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want to crop the images, specify the left co-ordinate of the top-left corner of the
+rectangle you would like to crop here. The default value is 0&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-croptop=&amp;lt;integer value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want to crop the images, specify the top co-ordinate of the top-left corner of the
+rectangle you would like to crop here. The default value is 0&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-cropwidth=&amp;lt;integer value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want to crop the images, specify the width of the rectangle you would like to crop
+here. The default value is -1 which specifies the full image width.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-cropheigh=&amp;lt;integer value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want to crop the images, specify the height of the rectangle you would like to crop
+here. The default value is -1 which specifies the full image height.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_5&#34;&gt;Other Image Editing Options&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-scale=&amp;lt;decimal value&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want to scale the images, specify a scaling factor here in terms of decimals. For instance
+to make the animated GIF half the size as source images use -scale=0.5. The default value is 1.0
+which specifies no scaling&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-rotate=&amp;lt;0 or 90 or 180 or 270&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want the images to be rotated, specify the rotation angle in degrees here. Arbitrary
+rotations are not supported and you can only use 90, 180 or 270. The default value is 0 which specifies no rotation&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;-flip=&amp;lt;&amp;quot;none&amp;quot; or &amp;quot;horizontal&amp;quot; or &amp;quot;vertical&amp;quot;&amp;gt;&lt;/code&gt;&lt;br /&gt;
+If you want the images to be flipped, specify &amp;ldquo;horizontal&amp;rdquo; or
+&amp;ldquo;vertical&amp;rdquo; here. The default value is &amp;ldquo;none&amp;rdquo; which specifies no flipping&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_6&#34;&gt;Other Options&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-verbose&lt;/code&gt;&lt;br /&gt;
+By default GoAniGiffy will process the files and exit without any messages unless there is an error.
+Specifying -verbose will show in-process messages as the individual frames get processed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_7&#34;&gt;Extracting Frames from Video&lt;/h2&gt;
+
+&lt;p&gt;If you want to convert a video to an animated GIF, you first need to extract frames. I use &lt;a href=&#34;http://www.mplayerhq.hu/&#34;&gt;MPlayer&lt;/a&gt;
+with a command line like below to extract JPEG frames. The &lt;code&gt;-ss 6 -endpos 8&lt;/code&gt; options specify extraction between the 6th and 8th seconds&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mplayer -vo jpeg:quality=80 -nosound -ss 6 -endpos 8 vid.mp4
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_8&#34;&gt;Example&lt;/h2&gt;
+
+&lt;p&gt;This command line creates a movie.gif from the images in the &lt;a href=&#34;https://github.com/srinathh/goanigiffy/tree/master/sample&#34;&gt;sample folder&lt;/a&gt;
+of the source repository.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;goanigiffy -src=&amp;quot;sample/*.jpg&amp;quot; -dest=&amp;quot;sample/movie.gif&amp;quot; -cropleft=100 -croptop=280 -cropwidth=550 -cropheight=351 -scale=0.5 -rotate=270 -verbose
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The original frames are processed into an animated GIF below showing  only the LCD Panel&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&#34;ArdGrafix6100 Screenshot&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/00000002.jpg&#34; /&gt;
+&lt;img alt=&#34;ArdGrafix6100 Screenshot&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/ardgrafix6100demo.gif&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_9&#34;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;GoAniGiffy code is licensed under the &lt;a href=&#34;https://github.com/srinathh/goanigiffy/blob/master/LICENSE&#34;&gt;Apache v2.0&lt;/a&gt; license.
+All other media files &amp;amp; documentation in the repository is licened under &lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-sa/4.0/&#34;&gt;Creative Commons Attribution-ShareAlike 4.0 International License&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Using FuseCompress to compress folders in Ubuntu</title>
+      <link>/blog/fusecompress-on-ubuntu/</link>
+      <pubDate>Sat, 30 Aug 2014 09:06:32 UTC</pubDate>
+      
+      <guid>/blog/fusecompress-on-ubuntu/</guid>
+      <description>
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Why consider using Fusecompress&lt;/h2&gt;
+
+&lt;p&gt;Many light-weight Notebooks and all Chromebooks today come with balzingly fast but
+limited capacity Solid State Drives (SSDs) on the theory that people store much of
+their data in the cloud. However, to use these as Android development machines,
+you typically do need to store space hogs like sources and library documentation,
+emulator images etc locally.&lt;/p&gt;
+
+&lt;p&gt;Fusecompress is a great little legacy utility that uses the FUSE (File System
+in User Space) library to provide an on the fly compressed mountable filesystem
+that in effect lets you compress specific directories in manner completely
+transparent to all other programs.&lt;/p&gt;
+
+&lt;p&gt;I use my HP Chromebook 14 loaded with Ubuntu 14.04 via the ChrUbuntu on a lean
+9GB partition as my primary development machine. I use fusecompress to compress
+offline documentation for Android and Python and the huge Android Emulator
+system images. This reduces the SSD footprint considerably with barely any impact
+on load times. The Emulator startup does become significantly slower but I need to
+to do this only once each session.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Installing fusecompress on Ubuntu 14.04&lt;/h2&gt;
+
+&lt;p&gt;Fusecompress however is not available in the standard Ubuntu repositories and
+must be compiled from source. Given the legacy nature of the codebase, it&amp;rsquo;s
+a bit tricky to compile for novices. This blog post outlines the process step-by-step.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install Aptitude&lt;/strong&gt;&lt;br /&gt;
+When I was using apt-get to install the dependency library sources, I found in
+a couple of cases the latest development releases of the libraries had
+conflicts and I had to regress to the previous version to install them.
+Aptitude does a much better job of solving for conflicts&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install aptitude
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install the auto build tools&lt;/strong&gt;&lt;br /&gt;
+If they&amp;rsquo;re not installed on your system already, you&amp;rsquo;ll need to install
+autoconf and automake to be able to build from source.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install autoconf automake libtool
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install compression algorithms development packages&lt;/strong&gt;&lt;br /&gt;
+Next install the development packages for compression algorithms supported
+by fusecompress - LZO, LZMA, ZLib &amp;amp; BZ2. I ran into trouble in the LZO package
+where I had to revert from the 2.06-1.2ubuntu1.1 version to 2.06-1.2ubuntu1
+version. Aptitude gives you a series of menu choices to handle this smoothly&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install zlib1g-dev libbz2-dev liblzma-dev liblzo2-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install the FUSE development package&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install libfuse-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Download the fusecompress sources&lt;/strong&gt;&lt;br /&gt;
+You can checkout the fusecompress source from Google Code with SubVersion.
+In today&amp;rsquo;s world of distributed version control systems like Git &amp;amp; Mercurial,
+using SubVersion may seem quaint but that&amp;rsquo;s the cost of using a stable legacy
+package like FuseCompress.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo aptitude install subversion
+svn checkout http://fusecompress.googlecode.com/svn/trunk/ fusecompress-read-only
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Run the fusecompress build process
+Change to the folder where you&amp;rsquo;ve downloaded the fusecompress sources and
+run the following commands. Put the generated fusecompress binary somewhere
+in your system path.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./autogen.sh
+./configure
+make
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Using fusecompress&lt;/h2&gt;
+
+&lt;p&gt;The least disruptive way I found to use fusecompress is to simply mount the compressed
+folders exactly where they currently are. The key thing to remember while using
+fusecompress is that it compress files when they get written to disk. So files that
+are already in the folder won&amp;rsquo;t automatically get compressed. The way I typically
+manage this is:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Rename the directory you want to compress&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mv directoryname temporaryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create an empty directory with the old name&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir directoryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Fusecompress the directory&lt;/strong&gt;
+The default compression algorithm used is LZO which is very fast. You can also
+use LZMA as indicated below to get a better compression ratio. You maw want to
+add this line to your ~/.profile to automount on boot.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;fusecompress directoryname
+fusecompress -c lzma directoryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Move back all the contents&lt;/strong&gt;
+Since Fusecompress will now compress each of the files as it is moved back, this
+step will take quite a bit of time depending on the amount of data&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd temporaryname
+mv *.* ../directoryname
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ArdGrafix6100: Fast Arduino driver for Nokia 6100 Color LCDs</title>
+      <link>/opensource/ardgrafix6100/</link>
+      <pubDate>Mon, 25 Aug 2014 04:23:21 UTC</pubDate>
+      
+      <guid>/opensource/ardgrafix6100/</guid>
+      <description>
+
+&lt;p&gt;ArdGrafix6100 is a fast and full-featured graphics library for interfacing the Nokia 6100 color
+graphics LCD with Arduino. It uses hardware SPI &amp;amp; block write features of the graphics controller
+on the LCD to boost graphics performance &amp;amp; supports advanced features like proportional fonts
+in a tiny RAM footprint. The Philips PF8833 controller is currently supported.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&#34;ArdGrafix6100 Screenshot&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/ardgrafix6100.jpg&#34; /&gt;
+&lt;img alt=&#34;ArdGrafix6100 Screenshot&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/ardgrafix6100demo.gif&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Download&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://code.google.com/p/ardgrafix6100/&#34;&gt;Get the Library&lt;/a&gt; from Google Code&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Fast&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Uses ATmega SPI peripherals &amp;amp; ports for high - performance graphics&lt;/li&gt;
+&lt;li&gt;Uses block-write features of LCD controller to speed up writes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Full Featured&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Supports Proportional Fonts - a 14px height font is included by default!&lt;/li&gt;
+&lt;li&gt;Implements all standard graphic primitives &amp;amp; utility classes like &amp;ldquo;xy&amp;rdquo;, &amp;ldquo;rectangle&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Practical&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fonts implemented programatically using OOP to conserve SRAM&lt;/li&gt;
+&lt;li&gt;Uses only AVR LIBC functions to ensure easy portability beyond Arduino&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_4&#34;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;Apache License, Version 2.0&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>FullScreenWrapper2: Python GUI framework for Android</title>
+      <link>/opensource/fullscreenwrapper/</link>
+      <pubDate>Sun, 24 Aug 2014 04:24:12 UTC</pubDate>
+      
+      <guid>/opensource/fullscreenwrapper/</guid>
+      <description>
+
+&lt;p&gt;FullScreenWapper2 is a GUI Framework for developing full screen apps using the FullScreenUI API functions provided by
+&lt;a href=&#34;https://code.google.com/p/android-scripting/&#34;&gt;Scripting Layer for Android (SL4A)&lt;/a&gt; using &lt;a href=&#34;Shttps://code.google.com/p/python-for-android/&#34;&gt;Python-for-Android&lt;/a&gt;
+It enables Python SL4A scripts to get a look &amp;amp; feel similar to Android Java apps using the same Views used by native
+Java apps XML Layouts and provides pythonic access to events.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Features&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Managed eventloop &amp;amp; a layout stack enabling easy parent-&amp;gt;child-&amp;gt;parent transitions&lt;/li&gt;
+&lt;li&gt;EventHandler classes with event-matching functions pre-built for standard View events like click,itemclick(ListView) and key&lt;/li&gt;
+&lt;li&gt;Device Sensors &amp;amp; other similar SL4A/Custom events can also be caught &amp;amp; managed eventloop + EventHandler class&lt;/li&gt;
+&lt;li&gt;Pythonic access to the views and properties of the layout (ie. MainLayout.views.txt_label.background = &amp;ldquo;#FFAA00AA&amp;rdquo;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Get it&lt;/h2&gt;
+
+&lt;p&gt;Full documentation &amp;amp; library download is available at the &lt;a href=&#34;https://code.google.com/p/python-for-android/wiki/fullscreenwrapper2&#34;&gt;Python-for-Android Wiki&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Framework Overview&lt;/h2&gt;
+
+&lt;p&gt;&lt;img alt=&#34;FullScreenWrapper2 framework design&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/fullscreenwrapper2.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Screenshots&lt;/h2&gt;
+
+&lt;p&gt;&lt;img alt=&#34;FullScreenWrapper2 framework design&#34; class=&#34;pure-img-responsive&#34; src=&#34;/img/fullscreenwrapper2_demo_screenshots.png&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Hello World Web Servers in Python &amp; Go</title>
+      <link>/blog/simplehttpservers/</link>
+      <pubDate>Sat, 23 Aug 2014 05:59:29 UTC</pubDate>
+      
+      <guid>/blog/simplehttpservers/</guid>
+      <description>
+
+&lt;p&gt;&lt;strong&gt;Note: This is a simple post primarily written to learn markdown&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Hello World programs are the first programs typically introduced in any
+programming language tutorial. However, in our modern era of web applications
+they are not particularly insightful into the strenghts of a language to support
+web development. In this article, we compare Hello World web servers written in
+Python &amp;amp; Go languages.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Go Language&lt;/h2&gt;
+
+&lt;p&gt;The &lt;a href=&#34;http://golang.org/&#34;&gt;Go Language&lt;/a&gt; released by Google is notable for its terse C Language inspired
+syntax (indeed &lt;a href=&#34;http://en.wikipedia.org/wiki/Ken_Thompson is one of the inventors&#34;&gt;Ken Thompson&lt;/a&gt;
+that nevertheless removes a lot of boilerplate. It has a unique approach to concurrency
+and derives high performance from being a compiled language.&lt;/p&gt;
+
+&lt;p&gt;Go comes with extensive support for developing web applications within its
+standard library including a robust templating solution. For serving simple static
+or dynamic driven websites, onerarely need anything more than this.
+For fancier applications, third party libraries provide more complex routers,
+context packages etc. The &lt;a href=&#34;/code/helloworld.go&#34;&gt;Hello World&lt;/a&gt; web server is
+effectively just 3 lines of code and can support many concurrent connections.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;package main
+
+import (
+    &amp;quot;fmt&amp;quot;
+    &amp;quot;log&amp;quot;
+    &amp;quot;net/http&amp;quot;
+)
+
+func main() {
+    http.HandleFunc(&amp;quot;/&amp;quot;, func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, &amp;quot;Hello World&amp;quot;)
+    })
+    log.Fatal(http.ListenAndServe(&amp;quot;:8080&amp;quot;, nil))
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Python&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.python.org/&#34;&gt;Python&lt;/a&gt; is among the simplest of modern programming languages to learn due to its guiding
+philosophy of &lt;a href=&#34;http://legacy.python.org/dev/peps/pep-0020/&#34;&gt;&lt;em&gt;There should be one and preferably only one obvious way to do it&lt;/em&gt;&lt;/a&gt;.
+Python&amp;rsquo;s ease and a large base of mature third party libraries has made it a language
+of choice among startups looking to iterate their minimum viable product quickly accepting
+the performance penalty of an interpreted language.&lt;/p&gt;
+
+&lt;p&gt;Python&amp;rsquo;s standard library has been designed for a prior era and it is definitely
+not as simple to spin up a &lt;a href=&#34;/code/helloworld.py&#34;&gt;Hello World&lt;/a&gt; webserver as in Go.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import BaseHTTPServer
+
+HOST_NAME = &#39;localhost&#39;
+PORT_NUMBER = 8080
+
+class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+    def do_GET(s):
+        s.send_response(200)
+        s.send_header(&amp;quot;Content-type&amp;quot;, &amp;quot;text/text&amp;quot;)
+        s.end_headers()
+        s.wfile.write(&amp;quot;Hello World&amp;quot;)
+
+if __name__ == &#39;__main__&#39;:
+    server_class = BaseHTTPServer.HTTPServer
+    httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    httpd.server_close()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;However modern web development with Python typically relies on one of the
+many third party web frameworks, notably &lt;a href=&#34;https://www.djangoproject.com/&#34;&gt;Django&lt;/a&gt;, to speed up web development.
+As an example, look at the simplification coming from the popular &lt;a href=&#34;http://flask.pocoo.org/&#34;&gt;Flask&lt;/a&gt; micro-framework.
+However, Python&amp;rsquo;s lack of in-built support for easy concurrency means that often,
+jury-rigged solutions need to be employed in production to scale&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from flask import Flask
+app = Flask(__name__)
+
+@app.route(&amp;quot;/&amp;quot;)
+def hello():
+    return &amp;quot;Hello World!&amp;quot;
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    app.run()
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>About Hariharan Srinath</title>
+      <link>/about/</link>
+      <pubDate>Fri, 01 Aug 2014 02:50:25 UTC</pubDate>
+      
+      <guid>/about/</guid>
+      <description>&lt;p&gt;I have been driven by curiosity since my childhood and my life took a decidedly geeky turn at the age of eleven
+in early 90s when I taught myself computer programming in the BASIC Language from IBM Personal Computer manuals
+in my father&amp;rsquo;s office. Though I have pursued other avenues in higher education and career, coding has been a
+lifelong hobby to which I have recently added tinkering with hobby electronics.&lt;/p&gt;
+
+&lt;p&gt;I have degrees in Metallurgical Engineering (&lt;a href=&#34;http://iitbhu.ac.in/&#34;&gt;Indian Institute of Technology, Benaras
+Hindu University, Varanasi&lt;/a&gt;) and Management (&lt;a href=&#34;http://www.iimahd.ernet.in/&#34;&gt;Indian Institute of Management, Ahmedabad&lt;/a&gt;).
+I contributed to a &lt;a href=&#34;http://www.saimm.co.za/Conferences/MoltenSlags2004/077-Ekengard.pdf&#34;&gt;paper on steel-making&lt;/a&gt;
+during my undergraduate internship in the Royal Institute of Technology, Stockholm.&lt;/p&gt;
+
+&lt;p&gt;I have been working at &lt;a href=&#34;http://www.pg.com&#34;&gt;Procter &amp;amp; Gamble&lt;/a&gt; since 2006 in the field of &lt;a href=&#34;http://india.experiencepg.com/home/consumer_market_knowledge0.html&#34;&gt;consumer insights &amp;amp; analytics&lt;/a&gt;.
+The major area of expertise I have developed over the years is in emerging market sales &amp;amp;
+distribution recently leading analytic capabilities in this space globally. I also have significant experience in the
+areas of traditional &amp;amp; digital media planning, modern retail, segmentation, trial/sampling programs and application
+of behavioral science to consumer communications.  I currently work in a global innovation role focused on
+developing new insights &amp;amp; analytics capabilities using emerging technologies.&lt;/p&gt;
+
+&lt;p&gt;I am based out of Mumbai, married to Deepa and we have a daughter.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

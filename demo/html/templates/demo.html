@@ -1,0 +1,41 @@
+<head>
+  <!-- Include jQuery and jQuery UI -->
+  <script src="/js/jquery.min.js" type="text/javascript"></script>
+  <script src="/js/jquery-ui.min.js" type="text/javascript"></script>
+  <!-- Include Fancytree skin and library -->
+  <link href="/css/ui.fancytree.min.css" rel="stylesheet" type="text/css">
+  <script src="/js/jquery.fancytree-all.min.js" type="text/javascript"></script>
+  <!-- Initialize the tree when page is loaded -->
+  <script type="text/javascript">
+    $(function(){
+      // Create the tree inside the <div id="tree"> element.
+      $("#tree").fancytree({ 
+     activeVisible: true, // Make sure, active nodes are visible (expanded).
+    aria: false, // Enable WAI-ARIA support.
+    autoActivate: true, // Automatically activate a node when it is focused (using keys).
+    autoCollapse: true, // Automatically collapse all siblings, when a node is expanded.
+    autoScroll: true, // Automatically scroll nodes into visible area.
+    clickFolderMode: 3, // 1:activate, 2:expand, 3:activate and expand, 4:activate (dblclick expands)
+    checkbox: false, // Show checkboxes.
+    debugLevel: 2, // 0:quiet, 1:normal, 2:debug
+    disabled: false, // Disable control
+    generateIds: false, // Generate id attributes like <span id='fancytree-id-KEY'>
+    idPrefix: "ft_", // Used to generate node id´s like <span id='fancytree-id-<key>'>.
+    icons: true, // Display node icons.
+    keyboard: true, // Support keyboard navigation.
+    keyPathSeparator: "/", // Used by node.getKeyPath() and tree.loadKeyPath().
+    minExpandLevel: 1, // 1: root node is not collapsible
+    selectMode: 2, // 1:single, 2:multi, 3:multi-hier
+    tabbable: true, // Whole tree behaves as one single control
+    titlesTabbable: false, // Node titles can receive keyboard focus       
+
+    source: {{.}}
+      });
+    });
+  </script>
+</head>
+<body>
+  <!-- Define where the tree should appear -->
+  <div id="tree"></div>
+</body>
+</html>
