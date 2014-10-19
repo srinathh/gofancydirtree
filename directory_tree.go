@@ -71,7 +71,11 @@ func NewTree(root string, skiphidden bool) (*Node, map[string]*Node, error) {
 			return err
 		}
 		if skiphidden && strings.Index(info.Name(), ".") == 0 {
-			return filepath.SkipDir
+			if info.IsDir() {
+				return filepath.SkipDir
+			} else {
+				return nil
+			}
 		}
 
 		key := doHash(path)
